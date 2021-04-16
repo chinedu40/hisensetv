@@ -101,7 +101,8 @@ def main():
     if args.no_ssl:
         ssl_context = None
     else:
-        ssl_context = ssl._create_unverified_context()
+        ssl_context = ssl._create_unverified_context(purpose=ssl.Purpose.CLIENT_AUTH)
+        ssl_context.load_cert_chain(certfile='/path/to/rcm_certchain_pem.cer', keyfile='/path/to/rcm_pem_privkey.pkcs8')
 
     tv = HisenseTv(
         args.hostname, enable_client_logger=args.verbose >= 2, ssl_context=ssl_context
